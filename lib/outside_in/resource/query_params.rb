@@ -36,14 +36,24 @@ module OutsideIn
         params = []
 
         @simple.each_pair do |input, api|
-          nk = input.to_s
-          params << "#{api}=#{inputs[nk]}" unless inputs[nk].nil?
+          nk = input.to_sym
+          unless inputs[nk].nil?
+            value = inputs[nk]
+            if value.respond_to?('each')
+              value.each do |sub|
+                params << "#{api}=#{sub}"
+              end
+            else
+              params << "#{api}=#{value}"
+            end
+          end
         end
 
         @negatable.each_pair do |input, api|
-          nk = input.to_s
+          nk = input.to_sym
           params.concat(inputs[nk].map {|s| "#{api}=#{URI.escape(s)}"}) unless inputs[nk].nil?
           ["wo-#{input}", "no-#{input}"].each do |nk|
+            nk = nk.to_sym
             params.concat(inputs[nk].map {|s| "no-#{api}=#{URI.escape(s)}"}) unless inputs[nk].nil?
           end
         end

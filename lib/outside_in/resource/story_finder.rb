@@ -5,7 +5,7 @@ module OutsideIn
     # @since 1.0
     class StoryFinder < OutsideIn::Resource::Base
       QP = QueryParams.new({:limit => :limit, :'max-age' => :max_age}, {:keyword => :keyword, :vertical => :vertical,
-        :format => :format, :'author-type' => :'author-type'})
+        :format => :format, :'all-keyword' => :'all-keyword', :'author-type' => :'author-type'})
 
       # Returns a version of +url+ that includes publication scoping when +inputs+ contains a non-nil
       # +publication-id+ entry.
