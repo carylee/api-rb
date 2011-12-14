@@ -50,6 +50,10 @@ module OutsideIn
         url =~ /\?/ ? "#{url}&#{sig_params}" : "#{url}?#{sig_params}"
       end
 
+      # Builds the auth string that is used in the API call
+      #
+      # @return [String] the auth string for the query parameter
+      #
       def self.make_auth_string()
         raise SignatureException, "Key not set" unless OutsideIn.key
         raise SignatureException, "Secret not set" unless OutsideIn.secret
