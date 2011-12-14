@@ -14,7 +14,7 @@ require 'outside_in/resource/story_finder'
 module OutsideIn
   # The API service host
   # @since 1.0
-  HOST = 'hyperlocal-api.outside.in'
+  HOST = 'news-api.patch.com'
 
   # The current version of the API (not the version of the SDK!)
   # @since 1.0

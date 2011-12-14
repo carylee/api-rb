@@ -32,7 +32,7 @@ module OutsideIn
     # @param [Hash<String, Object>] inputs the data inputs
     # @return [Hash<Symbol, Object>] the query result
     # @since 1.0
-    def self.named(name, inputs)
+    def self.named(name, inputs={})
       query_result(OutsideIn::Resource::LocationFinder.new("/locations/named/#{URI.escape(name)}").GET(inputs))
     end
 

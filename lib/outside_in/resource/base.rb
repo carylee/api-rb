@@ -1,6 +1,6 @@
 require 'httparty'
 require 'json'
-require 'md5'
+require 'digest/md5'
 
 module OutsideIn
   module Resource
@@ -46,9 +46,14 @@ module OutsideIn
       def self.sign(url)
         raise SignatureException, "Key not set" unless OutsideIn.key
         raise SignatureException, "Secret not set" unless OutsideIn.secret
-        sig_params = "dev_key=#{OutsideIn.key}&sig=#{MD5.new(OutsideIn.key + OutsideIn.secret +
-          Time.now.to_i.to_s).hexdigest}"
+        sig_params = "dev_key=#{OutsideIn.key}&sig=#{self.make_auth_string}"
         url =~ /\?/ ? "#{url}&#{sig_params}" : "#{url}?#{sig_params}"
+      end
+
+      def self.make_auth_string()
+        raise SignatureException, "Key not set" unless OutsideIn.key
+        raise SignatureException, "Secret not set" unless OutsideIn.secret
+        hash = Digest::MD5.hexdigest(OutsideIn.key + OutsideIn.secret + Time.now.to_i.to_s)
       end
 
       # Returns a new instance. Stores the absolutized, signed URL.
